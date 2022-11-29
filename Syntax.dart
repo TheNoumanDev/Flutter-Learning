@@ -28,3 +28,18 @@ void test(List<String>? name)
   name?.add("value");
   //even u cant unconditionaly put add value in list.
 }
+
+// Enumeration 
+enum person{FirstN, LastN, age}
+
+
+// !Note Every Class is implicitedly inherited by Object Class.
+// For Overridening a Operator of the Super Class
+
+// Bool operator ==(covariant 'ClassName' other) => other.name == name;
+
+
+// !New "Extensions" they are used when u r adding something to a existing class
+// but htey really doesn't belong to the class. They are useful but must be used with care.
+
+
