@@ -14,33 +14,42 @@ class MyApp extends StatelessWidget {
       home: Scaffold(
         backgroundColor: Colors.teal,
         body: SafeArea(
-            child: Row(
-          // verticalDirection:
-          //     VerticalDirection.down, // to set where the  widgets starts from
-          mainAxisAlignment: MainAxisAlignment
-              .spaceEvenly, // to defin where the widgets can be stored
-          crossAxisAlignment:
-              CrossAxisAlignment.stretch, // to align along horizontal
+            child: Column(
           children: [
-            Container(
-              width: 100,
-              child: Text('Container 1'),
-              color: Colors.white,
-            ),
-            SizedBox(), // to give a bit of space between widgets
-            Container(
-              width: 100,
-              height: 100,
-              child: Text("Container 2"),
-              color: Colors.yellow,
-            ),
-            Container(
-              width: 100,
-              child: Text("Container 3"),
-              color: Colors.red,
+            CircleAvatar(
+              radius: 50,
+              backgroundImage: AssetImage('Images/ass.jpg'),
             )
           ],
-        )),
+        )
+            // Row(
+            //   // verticalDirection:
+            //   //     VerticalDirection.down, // to set where the  widgets starts from
+            //   mainAxisAlignment: MainAxisAlignment
+            //       .spaceEvenly, // to defin where the widgets can be stored
+            //   crossAxisAlignment:
+            //       CrossAxisAlignment.stretch, // to align along horizontal
+            //   children: [
+            //     Container(
+            //       width: 100,
+            //       child: Text('Container 1'),
+            //       color: Colors.white,
+            //     ),
+            //     SizedBox(), // to give a bit of space between widgets
+            //     Container(
+            //       width: 100,
+            //       height: 100,
+            //       child: Text("Container 2"),
+            //       color: Colors.yellow,
+            //     ),
+            //     Container(
+            //       width: 100,
+            //       child: Text("Container 3"),
+            //       color: Colors.red,
+            //     )
+            //   ],
+            // ),
+            ),
       ),
     );
   }
