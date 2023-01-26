@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:practice_app/Views/Login_View.dart';
+import 'package:practice_app/Views/Register_View.dart';
 
 import 'firebase_options.dart';
 
@@ -26,7 +27,7 @@ class HomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Login'),
+        title: const Text('HomePage'),
       ),
       /*
        FutureBuilder is used to build the widget when the future is completed
@@ -47,16 +48,46 @@ class HomePage extends StatelessWidget {
               final currentUser = FirebaseAuth.instance.currentUser;
               print(currentUser);
               if (currentUser?.emailVerified ?? false) {
-                print("You are verified");
+                return const Text("Done!!!.");
               } else {
-                print("You are not verified");
+                return const verifyEmailView();
+                // Navigator.of(context).push(MaterialPageRoute(
+                //     builder: (context) => const verifyEmailView()));
               }
-              return const Text("Done!!!.");
+
             default:
               return const Text("Loading ....");
           }
         },
       ),
+    );
+  }
+}
+
+/*
+after verification has completed in firebase u have to again login to app
+to let firebase know that the user has verified his email so we need to
+change the conditions according to it.
+*/
+class verifyEmailView extends StatefulWidget {
+  const verifyEmailView({super.key});
+
+  @override
+  State<verifyEmailView> createState() => _verifyEmailViewState();
+}
+
+class _verifyEmailViewState extends State<verifyEmailView> {
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        const Text("Verify your email"),
+        TextButton(
+            onPressed: () async {
+              await FirebaseAuth.instance.currentUser?.sendEmailVerification();
+            },
+            child: const Text("Send Verification Email"))
+      ],
     );
   }
 }
