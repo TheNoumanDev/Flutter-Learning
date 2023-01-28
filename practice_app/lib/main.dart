@@ -52,7 +52,7 @@ class HomePage extends StatelessWidget {
               } else {
                 return const verifyEmailView();
                 // Navigator.of(context).push(MaterialPageRoute(
-                //     builder: (context) => const verifyEmailView()));
+                // builder: (context) => const verifyEmailView()));
               }
 
             default:
