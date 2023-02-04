@@ -16,6 +16,10 @@ void main() {
         primarySwatch: Colors.blue,
       ),
       home: const HomePage(),
+      routes: {
+        '/LoginView': (context) => const LoginView(),
+        '/RegisterView': (context) => const RegisterView(),
+      },
     ),
   );
 }
@@ -45,15 +49,16 @@ class HomePage extends StatelessWidget {
             case ConnectionState.done:
               // final ButtonStyle style = ElevatedButton.styleFrom(
               //     textStyle: const TextStyle(fontSize: 20));
-              final currentUser = FirebaseAuth.instance.currentUser;
-              print(currentUser);
-              if (currentUser?.emailVerified ?? false) {
-                return const Text("Done!!!.");
-              } else {
-                return const verifyEmailView();
-                // Navigator.of(context).push(MaterialPageRoute(
-                // builder: (context) => const verifyEmailView()));
-              }
+              // final currentUser = FirebaseAuth.instance.currentUser;
+              // print(currentUser);
+              // if (currentUser?.emailVerified ?? false) {
+              //   return const Text("Done!!!.");
+              // } else {
+              //   return const verifyEmailView();
+              // Navigator.of(context).push(MaterialPageRoute(
+              // builder: (context) => const verifyEmailView()));
+              //}
+              return const LoginView();
 
             default:
               return const Text("Loading ....");
