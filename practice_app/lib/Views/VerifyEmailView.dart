@@ -1,6 +1,12 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
+/*
+after verification has completed in firebase u have to again login to app
+to let firebase know that the user has verified his email so we need to
+change the conditions according to it.
+*/
+
 // ignore_for_file: camel_case_types
 class verifyEmailView extends StatefulWidget {
   const verifyEmailView({super.key});

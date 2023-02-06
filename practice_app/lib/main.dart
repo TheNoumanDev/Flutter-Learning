@@ -1,11 +1,14 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:practice_app/Views/APIView.dart';
+import 'package:practice_app/Views/AccountsView.dart';
 import 'package:practice_app/Views/Login_View.dart';
 import 'package:practice_app/Views/Register_View.dart';
-
+import 'package:practice_app/Views/ForgetView.dart';
 import 'Views/VerifyEmailView.dart';
 import 'firebase_options.dart';
+import 'dart:developer' as devtools show log;
 
 // Hot reload doesn't work with main method so we need to restart the app
 void main() {
@@ -18,6 +21,9 @@ void main() {
       ),
       home: const HomePage(),
       routes: {
+        '/AcountsView': (context) => const AccountView(),
+        '/ForgetView': (context) => const ForgotPasswordScreen(),
+        '/APIView': (context) => const APIView(),
         '/LoginView': (context) => const LoginView(),
         '/RegisterView': (context) => const RegisterView(),
       },
@@ -52,7 +58,7 @@ class HomePage extends StatelessWidget {
               return const LoginView();
             } else {
               if (currentUser.emailVerified) {
-                return const Text("Done!!!.");
+                return const AccountView();
               } else {
                 return const verifyEmailView();
               }
@@ -69,8 +75,38 @@ class HomePage extends StatelessWidget {
   }
 }
 
-/*
-after verification has completed in firebase u have to again login to app
-to let firebase know that the user has verified his email so we need to
-change the conditions according to it.
-*/
+enum MenuActions { Logout, Settings }
+
+class MainUI extends StatefulWidget {
+  const MainUI({super.key});
+
+  @override
+  State<MainUI> createState() => _MainUIState();
+}
+
+class _MainUIState extends State<MainUI> {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(title: const Text("Home UI"), actions: [
+        PopupMenuButton<MenuActions>(
+          onSelected: (value) {
+            devtools.log(value.toString());
+          },
+          itemBuilder: (context) {
+            return const [
+              PopupMenuItem(
+                value: MenuActions.Logout,
+                child: Text("Logout"),
+              ),
+              PopupMenuItem(
+                value: MenuActions.Settings,
+                child: Text("Setting"),
+              ),
+            ];
+          },
+        )
+      ]),
+    );
+  }
+}

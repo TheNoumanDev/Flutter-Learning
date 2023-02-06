@@ -48,7 +48,6 @@ class _LoginViewState extends State<LoginView> {
             ),
             controller: _email,
           ),
-
           TextField(
             obscureText: true,
             enableSuggestions: false,
@@ -58,7 +57,6 @@ class _LoginViewState extends State<LoginView> {
             ),
             controller: _password,
           ),
-
           TextButton(
             onPressed: () async {
               try {
@@ -89,78 +87,6 @@ class _LoginViewState extends State<LoginView> {
             },
             child: const Text('If Not Register, Then Click Me!'),
           ),
-          // ElevatedButton(
-          //   style: style,
-          //   onPressed: null,
-          //   child: const Text('Disabled'),
-          // ),
-          // // implement container
-          // Row(
-          //   // verticalDirection:
-          //   //     VerticalDirection.down, // to set where the  widgets starts from
-          //   //mainAxisAlignment: MainAxisAlignment
-          //   //   .spaceEvenly, // to defin where the widgets can be stored
-          //   //crossAxisAlignment:
-          //   //    CrossAxisAlignment.stretch, // to align along horizontal
-          //   children: [
-          //     Container(
-          //       width: 100,
-          //       height: 60,
-          //       margin: EdgeInsets.all(10),
-          //       child: Text('Container 1'),
-          //       color: Colors.blue,
-          //     ),
-          //     SizedBox(
-          //       width: 30,
-          //     ), // to give a bit of space between widgets
-          //     Container(
-          //       width: 100,
-          //       height: 100,
-          //       padding: const EdgeInsets.only(
-          //           left: 10.0, right: 0, top: 40, bottom: 0),
-          //       child: Text("Container 2"),
-          //       color: Colors.yellow,
-          //     ),
-          //     Container(
-          //       width: 100,
-          //       height: 60,
-          //       padding: EdgeInsets.all(10),
-          //       child: Text("Container 3"),
-          //       color: Colors.red,
-          //     )
-          //   ],
-          // ),
-          // Expanded(
-          //   child: Container(
-          //     color: Colors.amber,
-          //     width: 100,
-          //     padding: const EdgeInsets.only(
-          //         left: 10.0, right: 0, top: 80, bottom: 0),
-          //     child: Text("Expanded"),
-          //   ),
-          // ),
-          // //implement a icon button
-          // Center(
-          //   child: IconButton(
-          //     iconSize: 100,
-          //     icon: const Icon(
-          //       Icons.add,
-          //     ),
-          //     // the color of the button when it is pressed
-          //     color: Colors.black,
-          //     hoverColor: Colors.red,
-          //     // the method which is called
-          //     // when button is pressed
-
-          //     onPressed: () async {
-          //       final email = _email.text;
-          //       final password = _password.text;
-          //       final UserCredential = await FirebaseAuth.instance
-          //           .createUserWithEmailAndPassword(
-          //               email: email, password: password);
-          //     },
-          //   ),
-          // ),
         ],
       ),
     );
