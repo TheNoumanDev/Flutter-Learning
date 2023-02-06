@@ -1,5 +1,6 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:practice_app/constants/routes.dart';
 
 class ForgotPasswordScreen extends StatefulWidget {
   const ForgotPasswordScreen({super.key});
@@ -111,7 +112,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                   style: TextButton.styleFrom(backgroundColor: Colors.black),
                   onPressed: () {
                     Navigator.of(context).pushNamedAndRemoveUntil(
-                        '/AcountsView', (route) => false);
+                        AccountViewRoute, (route) => false);
                   },
                   child: const Text(
                     "/Account Page",
@@ -124,8 +125,8 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                 TextButton(
                   style: TextButton.styleFrom(backgroundColor: Colors.black),
                   onPressed: () {
-                    Navigator.of(context)
-                        .pushNamedAndRemoveUntil('/APIView', (route) => false);
+                    Navigator.of(context).pushNamedAndRemoveUntil(
+                        APIViewRoute, (route) => false);
                   },
                   child: const Text(
                     "API Page",

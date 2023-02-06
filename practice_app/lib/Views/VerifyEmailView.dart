@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:practice_app/constants/routes.dart';
 
 /*
 after verification has completed in firebase u have to again login to app
@@ -29,6 +30,8 @@ class _verifyEmailViewState extends State<verifyEmailView> {
               onPressed: () async {
                 await FirebaseAuth.instance.currentUser
                     ?.sendEmailVerification();
+                Navigator.of(context)
+                    .pushNamedAndRemoveUntil(LoginViewRoute, (route) => false);
               },
               child: const Text("Send Verification Email"))
         ],

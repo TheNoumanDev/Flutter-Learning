@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'dart:developer' as devtools show log;
+import 'package:practice_app/constants/routes.dart';
 
 String stringRep = "";
 List mapRep = [];
@@ -44,10 +45,10 @@ class _APIViewState extends State<APIView> {
           onSelected: (value) {
             if (value.toString() == "MenuActions.Accounts") {
               Navigator.of(context)
-                  .pushNamedAndRemoveUntil('/AcountsView', (route) => false);
+                  .pushNamedAndRemoveUntil(APIViewRoute, (route) => false);
             } else if (value.toString() == "MenuActions.Forget") {
               Navigator.of(context)
-                  .pushNamedAndRemoveUntil('/ForgetView', (route) => false);
+                  .pushNamedAndRemoveUntil(ForgetViewRoute, (route) => false);
             }
             devtools.log(value.toString());
           },

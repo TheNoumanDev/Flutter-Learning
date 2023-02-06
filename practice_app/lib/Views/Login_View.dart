@@ -2,6 +2,10 @@
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'dart:developer' as devtools show log;
+import 'package:practice_app/constants/routes.dart';
+
+import '../Utilitites/Error_dialogue.dart';
 
 class LoginView extends StatefulWidget {
   const LoginView({super.key});
@@ -62,9 +66,10 @@ class _LoginViewState extends State<LoginView> {
               try {
                 final email = _email.text;
                 final password = _password.text;
-                final userCredential = await FirebaseAuth.instance
-                    .signInWithEmailAndPassword(
-                        email: email, password: password);
+                await FirebaseAuth.instance.signInWithEmailAndPassword(
+                    email: email, password: password);
+                Navigator.of(context)
+                    .pushNamedAndRemoveUntil(MainUIRoute, (route) => false);
               } on FirebaseAuthException catch (e) {
                 // you can check the exception type by e.runtimeType
                 // and then to catch this specific exception you can use
@@ -72,10 +77,14 @@ class _LoginViewState extends State<LoginView> {
                 // use the e.code method to check the error code adn implement
                 // the code accordingly.
                 if (e.code == "user-not-found") {
-                  print("No user found for that email");
+                  ShowDialogGeneric(context, "User Not Found");
                 } else if (e.code == "wrong-password") {
-                  print("Wrong password provided for that user");
+                  ShowDialogGeneric(context, "Wrong Password");
+                } else {
+                  ShowDialogGeneric(context, "Error: ${e.code}");
                 }
+              } catch (e) {
+                ShowDialogGeneric(context, e.toString());
               }
             },
             child: const Text('Login'),
@@ -83,7 +92,7 @@ class _LoginViewState extends State<LoginView> {
           TextButton(
             onPressed: () {
               Navigator.of(context)
-                  .pushNamedAndRemoveUntil('/RegisterView', (route) => false);
+                  .pushNamedAndRemoveUntil(RegisterViewRoute, (route) => false);
             },
             child: const Text('If Not Register, Then Click Me!'),
           ),

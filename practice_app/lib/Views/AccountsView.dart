@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
-
+import 'package:practice_app/constants/routes.dart';
 import 'ProfileCard.dart';
 
 class AccountView extends StatelessWidget {
@@ -112,8 +112,8 @@ class AccountView extends StatelessWidget {
               TextButton(
                 style: TextButton.styleFrom(backgroundColor: Colors.black),
                 onPressed: () {
-                  Navigator.of(context)
-                      .pushNamedAndRemoveUntil('/ForgetView', (route) => false);
+                  Navigator.of(context).pushNamedAndRemoveUntil(
+                      ForgetViewRoute, (route) => false);
                 },
                 child: const Text(
                   "Forget Page",
@@ -127,7 +127,7 @@ class AccountView extends StatelessWidget {
                 style: TextButton.styleFrom(backgroundColor: Colors.black),
                 onPressed: () {
                   Navigator.of(context)
-                      .pushNamedAndRemoveUntil('/APIView', (route) => false);
+                      .pushNamedAndRemoveUntil(APIViewRoute, (route) => false);
                 },
                 child: const Text(
                   "API Page",
