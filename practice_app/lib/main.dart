@@ -58,7 +58,7 @@ class HomePage extends StatelessWidget {
               return const LoginView();
             } else {
               if (currentUser.emailVerified) {
-                return const AccountView();
+                return const MainUI();
               } else {
                 return const verifyEmailView();
               }
@@ -91,7 +91,20 @@ class _MainUIState extends State<MainUI> {
       appBar: AppBar(title: const Text("Home UI"), actions: [
         PopupMenuButton<MenuActions>(
           onSelected: (value) {
-            devtools.log(value.toString());
+            switch (value) {
+              case MenuActions.Logout:
+                showDialogBox(context).then((value) {
+                  if (value) {
+                    FirebaseAuth.instance.signOut();
+                    Navigator.of(context).pushNamedAndRemoveUntil(
+                        '/LoginView', (route) => false);
+                  }
+                });
+                break;
+              case MenuActions.Settings:
+                // TODO: Handle this case.
+                break;
+            }
           },
           itemBuilder: (context) {
             return const [
@@ -109,4 +122,28 @@ class _MainUIState extends State<MainUI> {
       ]),
     );
   }
+}
+
+Future<bool> showDialogBox(BuildContext context) {
+  return showDialog<bool>(
+    context: context,
+    builder: (context) {
+      return AlertDialog(
+        title: const Text("Logout"),
+        content: const Text("Are you sure you want to logout?"),
+        actions: [
+          TextButton(
+              onPressed: () {
+                Navigator.of(context).pop(false);
+              },
+              child: const Text("Cancel")),
+          TextButton(
+              onPressed: () {
+                Navigator.of(context).pop(true);
+              },
+              child: const Text("Logout")),
+        ],
+      );
+    },
+  ).then((value) => value ?? false);
 }
