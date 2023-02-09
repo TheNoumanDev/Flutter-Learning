@@ -1,11 +1,13 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:practice_app/Views/APIView.dart';
 import 'package:practice_app/Views/AccountsView.dart';
 import 'package:practice_app/Views/Login_View.dart';
 import 'package:practice_app/Views/Register_View.dart';
 import 'package:practice_app/Views/ForgetView.dart';
+import 'package:practice_app/constants/routes.dart';
 import 'Views/MainUI.dart';
 import 'Views/VerifyEmailView.dart';
 import 'firebase_options.dart';
@@ -22,12 +24,12 @@ void main() {
       ),
       home: const HomePage(),
       routes: {
-        '/AcountsView': (context) => const AccountView(),
-        '/ForgetView': (context) => const ForgotPasswordScreen(),
-        '/APIView': (context) => const APIView(),
-        '/LoginView': (context) => const LoginView(),
-        '/RegisterView': (context) => const RegisterView(),
-        '/MainUI': (context) => const MainUI(),
+        AccountViewRoute: (context) => const AccountView(),
+        ForgetViewRoute: (context) => const ForgotPasswordScreen(),
+        APIViewRoute: (context) => const APIView(),
+        LoginViewRoute: (context) => const LoginView(),
+        RegisterViewRoute: (context) => const RegisterView(),
+        MainUIRoute: (context) => const MainUI(),
       },
     ),
   );
@@ -55,12 +57,12 @@ class HomePage extends StatelessWidget {
             // final ButtonStyle style = ElevatedButton.styleFrom(
             //     textStyle: const TextStyle(fontSize: 20));
             final currentUser = FirebaseAuth.instance.currentUser;
-            // print(currentUser);
+
             if (currentUser == null) {
               return const LoginView();
             } else {
               if (currentUser.emailVerified) {
-                return const MainUI();
+                return const AccountView();
               } else {
                 return const verifyEmailView();
               }
