@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
@@ -10,6 +11,9 @@ class AccountView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        title: const Text("Accounts"),
+      ),
       body: Column(
         children: [
           Container(
@@ -139,6 +143,70 @@ class AccountView extends StatelessWidget {
             ],
           ),
         ],
+      ),
+      drawer: Drawer(
+        child: ListView(
+          padding: const EdgeInsets.all(0),
+          children: [
+            const DrawerHeader(
+              decoration: BoxDecoration(
+                color: Colors.lightBlue,
+              ), //BoxDecoration
+              child: UserAccountsDrawerHeader(
+                decoration: BoxDecoration(color: Colors.lightBlue),
+                accountName: Text(
+                  "Muhammad Nouman",
+                  style: TextStyle(fontSize: 18),
+                ),
+                accountEmail: Text("TheNoumanDev@gmail.com"),
+                currentAccountPictureSize: Size.square(50),
+                currentAccountPicture: CircleAvatar(
+                  backgroundColor: Colors.white,
+                  child: Text(
+                    "A",
+                    style: TextStyle(fontSize: 30.0, color: Colors.blue),
+                  ), //Text
+                ), //circleAvatar
+              ), //UserAccountDrawerHeader
+            ), //DrawerHeader
+            ListTile(
+              leading: const Icon(Icons.person),
+              title: const Text(' API Services '),
+              onTap: () {
+                Navigator.pop(context);
+                Navigator.of(context)
+                    .pushNamedAndRemoveUntil(APIViewRoute, (route) => false);
+              },
+            ),
+            ListTile(
+              leading: const Icon(Icons.room_service),
+              title: const Text(' Forget Password '),
+              onTap: () {
+                Navigator.pop(context);
+                Navigator.of(context)
+                    .pushNamedAndRemoveUntil(ForgetViewRoute, (route) => false);
+              },
+            ),
+            ListTile(
+              leading: const Icon(Icons.settings),
+              title: const Text(' Settings '),
+              onTap: () {
+                Navigator.pop(context);
+              },
+            ),
+
+            ListTile(
+              leading: const Icon(Icons.logout),
+              title: const Text('LogOut'),
+              onTap: () {
+                Navigator.pop(context);
+                FirebaseAuth.instance.signOut();
+                Navigator.of(context)
+                    .pushNamedAndRemoveUntil(LoginViewRoute, (route) => false);
+              },
+            ),
+          ],
+        ),
       ),
     );
   }

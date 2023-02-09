@@ -48,6 +48,8 @@ class _LoginViewState extends State<LoginView> {
             enableSuggestions: false,
             autocorrect: false,
             decoration: const InputDecoration(
+              border: OutlineInputBorder(),
+              labelText: 'Email',
               hintText: ("Enter your email"),
             ),
             controller: _email,
@@ -57,6 +59,8 @@ class _LoginViewState extends State<LoginView> {
             enableSuggestions: false,
             autocorrect: false,
             decoration: const InputDecoration(
+              border: OutlineInputBorder(),
+              labelText: 'Password',
               hintText: ("Enter your password"),
             ),
             controller: _password,
@@ -68,8 +72,8 @@ class _LoginViewState extends State<LoginView> {
                 final password = _password.text;
                 await FirebaseAuth.instance.signInWithEmailAndPassword(
                     email: email, password: password);
-                Navigator.of(context)
-                    .pushNamedAndRemoveUntil(MainUIRoute, (route) => false);
+                Navigator.of(context).pushNamedAndRemoveUntil(
+                    AccountViewRoute, (route) => false);
               } on FirebaseAuthException catch (e) {
                 // you can check the exception type by e.runtimeType
                 // and then to catch this specific exception you can use

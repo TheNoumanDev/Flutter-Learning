@@ -4,6 +4,7 @@ import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:practice_app/Views/APIView.dart';
 import 'package:practice_app/Views/AccountsView.dart';
+import 'package:practice_app/Views/InsertRecordAPI.dart';
 import 'package:practice_app/Views/Login_View.dart';
 import 'package:practice_app/Views/Register_View.dart';
 import 'package:practice_app/Views/ForgetView.dart';
@@ -30,6 +31,7 @@ void main() {
         LoginViewRoute: (context) => const LoginView(),
         RegisterViewRoute: (context) => const RegisterView(),
         MainUIRoute: (context) => const MainUI(),
+        InsertAPIRoute: (context) => const InsertData(),
       },
     ),
   );

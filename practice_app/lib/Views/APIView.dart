@@ -2,6 +2,7 @@
 
 import 'dart:async';
 
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:firebase_database/ui/firebase_animated_list.dart';
 import 'package:flutter/material.dart';
@@ -24,7 +25,7 @@ class APIView extends StatefulWidget {
 }
 
 Query fb = FirebaseDatabase.instance.ref().child('users');
-DatabaseReference reference = FirebaseDatabase.instance.ref().child('Students');
+final reference = FirebaseDatabase.instance.ref().child('users');
 String _data = "";
 
 class _APIViewState extends State<APIView> {
@@ -154,6 +155,8 @@ class _APIViewState extends State<APIView> {
                 ),
                 GestureDetector(
                   onTap: () {
+                    // detele the record from firebase database using key
+                    print(Students['key']);
                     reference.child(Students['key']).remove();
                   },
                   child: Row(
@@ -182,12 +185,11 @@ class _APIViewState extends State<APIView> {
           onSelected: (value) {
             if (value.toString() == "MenuActions.Accounts") {
               Navigator.of(context)
-                  .pushNamedAndRemoveUntil(APIViewRoute, (route) => false);
+                  .pushNamedAndRemoveUntil(AccountViewRoute, (route) => false);
             } else if (value.toString() == "MenuActions.Forget") {
               Navigator.of(context)
                   .pushNamedAndRemoveUntil(ForgetViewRoute, (route) => false);
             }
-            devtools.log(value.toString());
           },
           itemBuilder: (context) {
             return const [
@@ -210,9 +212,12 @@ class _APIViewState extends State<APIView> {
             itemBuilder: (BuildContext context, DataSnapshot snapshot,
                 Animation<double> animation, int index) {
               Map Students = snapshot.value as Map;
+
               Students['key'] = snapshot.key;
 
               return listItem(Students: Students);
+
+              //return listItem(Students: Students);
             },
           )
           //   child: mapRep == null
@@ -286,6 +291,78 @@ class _APIViewState extends State<APIView> {
           //           },
           //         ),
           ),
+      drawer: Drawer(
+        child: ListView(
+          padding: const EdgeInsets.all(0),
+          children: [
+            const DrawerHeader(
+              decoration: BoxDecoration(
+                color: Colors.lightBlue,
+              ), //BoxDecoration
+              child: UserAccountsDrawerHeader(
+                decoration: BoxDecoration(color: Colors.lightBlue),
+                accountName: Text(
+                  "Muhammad Nouman",
+                  style: TextStyle(fontSize: 18),
+                ),
+                accountEmail: Text("TheNoumanDev@gmail.com"),
+                currentAccountPictureSize: Size.square(50),
+                currentAccountPicture: CircleAvatar(
+                  backgroundColor: Colors.white,
+                  child: Text(
+                    "A",
+                    style: TextStyle(fontSize: 30.0, color: Colors.blue),
+                  ), //Text
+                ), //circleAvatar
+              ), //UserAccountDrawerHeader
+            ), //DrawerHeader
+            ListTile(
+              leading: const Icon(Icons.person),
+              title: const Text(' Accounts '),
+              onTap: () {
+                Navigator.pop(context);
+                Navigator.of(context).pushNamedAndRemoveUntil(
+                    AccountViewRoute, (route) => false);
+              },
+            ),
+            ListTile(
+              leading: const Icon(Icons.room_service),
+              title: const Text(' Add New Service '),
+              onTap: () {
+                Navigator.pop(context);
+                Navigator.of(context)
+                    .pushNamedAndRemoveUntil(InsertAPIRoute, (route) => true);
+              },
+            ),
+            ListTile(
+              leading: const Icon(Icons.settings),
+              title: const Text(' Settings '),
+              onTap: () {
+                Navigator.pop(context);
+              },
+            ),
+            ListTile(
+              leading: const Icon(Icons.lock),
+              title: const Text(' Forget '),
+              onTap: () {
+                Navigator.pop(context);
+                Navigator.of(context)
+                    .pushNamedAndRemoveUntil(ForgetViewRoute, (route) => false);
+              },
+            ),
+            ListTile(
+              leading: const Icon(Icons.logout),
+              title: const Text('LogOut'),
+              onTap: () {
+                Navigator.pop(context);
+                FirebaseAuth.instance.signOut();
+                Navigator.of(context)
+                    .pushNamedAndRemoveUntil(LoginViewRoute, (route) => false);
+              },
+            ),
+          ],
+        ),
+      ),
     );
   }
 }

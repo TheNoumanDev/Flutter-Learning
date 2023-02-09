@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:practice_app/constants/routes.dart';
@@ -13,6 +14,9 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        title: const Text("Forgot Password"),
+      ),
       body: Padding(
         padding: const EdgeInsets.only(left: 16.0, right: 16.0, top: 45.0),
         child: Column(
@@ -136,6 +140,70 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                   ),
                 ),
               ],
+            ),
+          ],
+        ),
+      ),
+      drawer: Drawer(
+        child: ListView(
+          padding: const EdgeInsets.all(0),
+          children: [
+            const DrawerHeader(
+              decoration: BoxDecoration(
+                color: Colors.lightBlue,
+              ), //BoxDecoration
+              child: UserAccountsDrawerHeader(
+                decoration: BoxDecoration(color: Colors.lightBlue),
+                accountName: Text(
+                  "Muhammad Nouman",
+                  style: TextStyle(fontSize: 18),
+                ),
+                accountEmail: Text("TheNoumanDev@gmail.com"),
+                currentAccountPictureSize: Size.square(50),
+                currentAccountPicture: CircleAvatar(
+                  backgroundColor: Colors.white,
+                  child: Text(
+                    "A",
+                    style: TextStyle(fontSize: 30.0, color: Colors.blue),
+                  ), //Text
+                ), //circleAvatar
+              ), //UserAccountDrawerHeader
+            ), //DrawerHeader
+            ListTile(
+              leading: const Icon(Icons.person),
+              title: const Text(' API Services '),
+              onTap: () {
+                Navigator.pop(context);
+                Navigator.of(context)
+                    .pushNamedAndRemoveUntil(APIViewRoute, (route) => false);
+              },
+            ),
+            ListTile(
+              leading: const Icon(Icons.room_service),
+              title: const Text(' Accounts Details '),
+              onTap: () {
+                Navigator.pop(context);
+                Navigator.of(context).pushNamedAndRemoveUntil(
+                    AccountViewRoute, (route) => false);
+              },
+            ),
+            ListTile(
+              leading: const Icon(Icons.settings),
+              title: const Text(' Settings '),
+              onTap: () {
+                Navigator.pop(context);
+              },
+            ),
+
+            ListTile(
+              leading: const Icon(Icons.logout),
+              title: const Text('LogOut'),
+              onTap: () {
+                Navigator.pop(context);
+                FirebaseAuth.instance.signOut();
+                Navigator.of(context)
+                    .pushNamedAndRemoveUntil(LoginViewRoute, (route) => false);
+              },
             ),
           ],
         ),
