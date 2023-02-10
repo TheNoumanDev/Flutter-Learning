@@ -2,6 +2,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
+import 'package:flutter_animated_button/flutter_animated_button.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:practice_app/constants/routes.dart';
 import 'ProfileCard.dart';
 
@@ -108,6 +110,20 @@ class AccountView extends StatelessWidget {
                 ),
               ),
             ),
+          ),
+          AnimatedButton(
+            height: 70,
+            width: 200,
+            text: 'SUBMIT',
+            isReverse: true,
+            selectedTextColor: Colors.black,
+            transitionType: TransitionType.BOTTOM_TO_TOP,
+            textStyle: GoogleFonts.nunito(
+                fontSize: 28,
+                letterSpacing: 5,
+                color: Colors.white,
+                fontWeight: FontWeight.w300),
+            onPress: () {},
           ),
           const Spacer(),
           Row(
