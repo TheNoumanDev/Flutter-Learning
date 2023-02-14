@@ -4,7 +4,7 @@
 import 'package:fcsmadproject/utilities/helpingFuntions.dart';
 import 'package:flutter/material.dart';
 import 'dart:developer' as devtools show log;
-
+import 'package:fcsmadproject/constants/routes.dart';
 import 'package:flutter/services.dart';
 //import 'package:practice_app/constants/routes.dart';
 
@@ -258,7 +258,8 @@ class _RegisterViewState extends State<LoginView> {
 
   Widget _buildSignupBtn() {
     return GestureDetector(
-      onTap: () => print('Sign Up Button Pressed'),
+      onTap: () => Navigator.of(context)
+          .pushNamedAndRemoveUntil(registerViewRoute, (route) => false),
       child: RichText(
         text: const TextSpan(
           children: [
