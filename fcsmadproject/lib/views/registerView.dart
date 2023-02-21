@@ -1,7 +1,9 @@
 // ignore_for_file: avoid_print
 
 //import 'package:firebase_auth/firebase_auth.dart';
+
 import 'package:fcsmadproject/utilities/helpingFuntions.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'dart:developer' as devtools show log;
 
@@ -94,7 +96,7 @@ class _RegisterViewState extends State<RegisterView> {
                       _buildPasswordTF(),
                       //_buildForgotPasswordBtn(),
                       //  _buildRememberMeCheckbox(),
-                      _buildLoginBtn(),
+                      _buildSignUpBtn(),
                       _buildSignInWithText(),
                       _buildSocialBtnRow(),
                       _buildSignupBtn(),
@@ -113,11 +115,11 @@ class _RegisterViewState extends State<RegisterView> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
-        Text(
+        const Text(
           'Email',
           style: kLabelStyle,
         ),
-        SizedBox(height: 10.0),
+        const SizedBox(height: 10.0),
         // TextField(
         //   keyboardType: TextInputType.text,
         //   decoration: const InputDecoration(
@@ -131,12 +133,13 @@ class _RegisterViewState extends State<RegisterView> {
           decoration: kBoxDecorationStyle,
           height: 60.0,
           child: TextField(
+            controller: _email,
             keyboardType: TextInputType.emailAddress,
-            style: TextStyle(
+            style: const TextStyle(
               color: Colors.white,
               fontFamily: 'OpenSans',
             ),
-            decoration: InputDecoration(
+            decoration: const InputDecoration(
               border: InputBorder.none,
               //contentPadding: EdgeInsets.only(top: 14.0),
               prefixIcon: Icon(
@@ -157,22 +160,23 @@ class _RegisterViewState extends State<RegisterView> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
-        Text(
+        const Text(
           'Password',
           style: kLabelStyle,
         ),
-        SizedBox(height: 10.0),
+        const SizedBox(height: 10.0),
         Container(
           alignment: Alignment.centerLeft,
           decoration: kBoxDecorationStyle,
           height: 60.0,
           child: TextField(
+            controller: _password,
             obscureText: true,
-            style: TextStyle(
+            style: const TextStyle(
               color: Colors.white,
               fontFamily: 'OpenSans',
             ),
-            decoration: InputDecoration(
+            decoration: const InputDecoration(
               border: InputBorder.none,
               contentPadding: EdgeInsets.only(top: 14.0),
               prefixIcon: Icon(
@@ -194,7 +198,7 @@ class _RegisterViewState extends State<RegisterView> {
       child: TextButton(
         onPressed: () => print('Forgot Password Button Pressed'),
         //padding: EdgeInsets.only(right: 0.0),
-        child: Text(
+        child: const Text(
           'Forgot Password?',
           style: kLabelStyle,
         ),
@@ -220,7 +224,7 @@ class _RegisterViewState extends State<RegisterView> {
               },
             ),
           ),
-          Text(
+          const Text(
             'Remember me',
             style: kLabelStyle,
           ),
@@ -229,9 +233,9 @@ class _RegisterViewState extends State<RegisterView> {
     );
   }
 
-  Widget _buildLoginBtn() {
+  Widget _buildSignUpBtn() {
     return Container(
-      padding: EdgeInsets.symmetric(vertical: 25.0),
+      padding: const EdgeInsets.symmetric(vertical: 25.0),
       width: double.infinity,
       child: ElevatedButton(
         style: ElevatedButton.styleFrom(
@@ -241,14 +245,35 @@ class _RegisterViewState extends State<RegisterView> {
           //onPrimary: Colors.white, // foreground
         ),
 
-        onPressed: () => Navigator.of(context)
-            .pushNamedAndRemoveUntil(LoginViewRoute, (route) => false),
+        onPressed: () async {
+          try {
+            final email = _email.text;
+            final password = _password.text;
+            final userCredential = await FirebaseAuth.instance
+                .createUserWithEmailAndPassword(
+                    email: email, password: password);
+          } on FirebaseAuthException catch (e) {
+            if (e.code == "weak-password") {
+              ShowDialogGeneric(context, "The password provided is too weak.");
+            } else if (e.code == "email-already-in-use") {
+              ShowDialogGeneric(
+                  context, "The account already exists for that email.");
+            } else if (e.code == "invalid-email") {
+              ShowDialogGeneric(context, "The email is invalid.");
+            } else {
+              ShowDialogGeneric(context, "Something went wrong.");
+            }
+          } catch (e) {
+            ShowDialogGeneric(context, "Error: ${e.toString()}");
+            devtools.log(e.toString());
+          }
+        },
         //padding: EdgeInsets.all(15.0),
         //shape: RoundedRectangleBorder(
 
         //),
         //color:
-        child: Text(
+        child: const Text(
           'SIGN UP',
           style: TextStyle(
             color: Color(0xFF527DAA),
@@ -264,7 +289,7 @@ class _RegisterViewState extends State<RegisterView> {
 
   Widget _buildSignInWithText() {
     return Column(
-      children: <Widget>[
+      children: const <Widget>[
         Text(
           '- OR -',
           style: TextStyle(

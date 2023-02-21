@@ -24,8 +24,8 @@ class APIView extends StatefulWidget {
   State<APIView> createState() => _APIViewState();
 }
 
-Query fb = FirebaseDatabase.instance.ref().child('users');
-final reference = FirebaseDatabase.instance.ref().child('users');
+Query fb = FirebaseDatabase.instance.ref().child('Person');
+final reference = FirebaseDatabase.instance.ref().child('Person');
 String _data = "";
 
 class _APIViewState extends State<APIView> {
@@ -84,11 +84,11 @@ class _APIViewState extends State<APIView> {
             RichText(
               text: TextSpan(children: [
                 const TextSpan(
-                    text: "Title: ",
+                    text: "Name: ",
                     style: TextStyle(
                         fontWeight: FontWeight.bold, color: Colors.black)),
                 TextSpan(
-                  text: Students["title"],
+                  text: Students['Name'],
                   style: const TextStyle(
                     color: Colors.black,
                   ),
@@ -102,11 +102,11 @@ class _APIViewState extends State<APIView> {
               child: RichText(
                 text: TextSpan(children: [
                   const TextSpan(
-                      text: "Description: ",
+                      text: "Email: ",
                       style: TextStyle(
                           fontWeight: FontWeight.bold, color: Colors.black)),
                   TextSpan(
-                      text: Students["description"],
+                      text: Students["Email"],
                       style: const TextStyle(color: Colors.black))
                 ]),
               ),
@@ -117,11 +117,25 @@ class _APIViewState extends State<APIView> {
             RichText(
               text: TextSpan(children: [
                 const TextSpan(
-                    text: "Status: ",
+                    text: "Phone Number: ",
                     style: TextStyle(
                         fontWeight: FontWeight.bold, color: Colors.black)),
                 TextSpan(
-                    text: Students["status"],
+                    text: Students["Number"],
+                    style: const TextStyle(color: Colors.black))
+              ]),
+            ),
+          ]),
+          Row(children: [
+            // wrap below Text widget with textrich widget to make it bold
+            RichText(
+              text: TextSpan(children: [
+                const TextSpan(
+                    text: "Gender: ",
+                    style: TextStyle(
+                        fontWeight: FontWeight.bold, color: Colors.black)),
+                TextSpan(
+                    text: Students["Gender"],
                     style: const TextStyle(color: Colors.black))
               ]),
             ),
@@ -212,7 +226,6 @@ class _APIViewState extends State<APIView> {
             itemBuilder: (BuildContext context, DataSnapshot snapshot,
                 Animation<double> animation, int index) {
               Map Students = snapshot.value as Map;
-
               Students['key'] = snapshot.key;
 
               return listItem(Students: Students);

@@ -14,13 +14,17 @@ class _UpdateRecordState extends State<UpdateRecord> {
   final titleController = TextEditingController();
   final descriptionController = TextEditingController();
   final statusController = TextEditingController();
+  final genderController = TextEditingController();
+  String _selectedGender = "";
+
+  final List<String> _genderOptions = ['Male', 'Female', 'Non-binary', 'Other'];
 
   late DatabaseReference dbRef;
 
   @override
   void initState() {
     super.initState();
-    dbRef = FirebaseDatabase.instance.ref().child('users');
+    dbRef = FirebaseDatabase.instance.ref().child('Person');
     getStudentData();
   }
 
@@ -29,11 +33,11 @@ class _UpdateRecordState extends State<UpdateRecord> {
 
     Map student = snapshot.value as Map;
     //String a = '${widget.studentKey}/title';
-    print(student['title']);
-    print("asdasda");
-    titleController.text = student['title'];
-    descriptionController.text = student['description'];
-    statusController.text = student['status'];
+
+    titleController.text = student['Name'];
+    descriptionController.text = student['Email'];
+    statusController.text = student['Number'];
+    genderController.text = student['Gender'];
   }
 
   Widget ShowUpdateDialog(
@@ -56,7 +60,7 @@ class _UpdateRecordState extends State<UpdateRecord> {
                 keyboardType: TextInputType.text,
                 decoration: const InputDecoration(
                   border: OutlineInputBorder(),
-                  labelText: 'Title',
+                  labelText: 'Name',
                 ),
               ),
             ),
@@ -71,7 +75,7 @@ class _UpdateRecordState extends State<UpdateRecord> {
                 keyboardType: TextInputType.text,
                 decoration: const InputDecoration(
                   border: OutlineInputBorder(),
-                  labelText: 'Description',
+                  labelText: 'Email',
                   //hintText: 'Enter Your Age',
                 ),
               ),
@@ -86,9 +90,37 @@ class _UpdateRecordState extends State<UpdateRecord> {
                 keyboardType: TextInputType.text,
                 decoration: const InputDecoration(
                   border: OutlineInputBorder(),
-                  labelText: 'Status',
+                  labelText: 'Number',
                   //hintText: 'Enter Your Salary',
                 ),
+              ),
+            ),
+            const SizedBox(
+              height: 30,
+            ),
+            Padding(
+              padding: const EdgeInsets.only(left: 10.0, right: 10.0),
+              child: DropdownButtonFormField<String>(
+                decoration: const InputDecoration(
+                  labelText: 'Gender',
+                  border: OutlineInputBorder(),
+                ),
+                value: genderController.text.isNotEmpty
+                    ? genderController.text
+                    : null,
+                onChanged: (value) {
+                  setState(() {
+                    _selectedGender = value!;
+                    genderController.text = value;
+                  });
+                },
+                items: _genderOptions
+                    .map<DropdownMenuItem<String>>((String value) {
+                  return DropdownMenuItem<String>(
+                    value: value,
+                    child: Text(value),
+                  );
+                }).toList(),
               ),
             ),
             const SizedBox(
@@ -99,9 +131,10 @@ class _UpdateRecordState extends State<UpdateRecord> {
               child: MaterialButton(
                 onPressed: () {
                   Map<String, String> students = {
-                    'title': titleController.text,
-                    'description': descriptionController.text,
-                    'status': statusController.text
+                    'Name': titleController.text,
+                    'Email': descriptionController.text,
+                    'Number': statusController.text,
+                    'Gender': genderController.text
                   };
 
                   dbRef

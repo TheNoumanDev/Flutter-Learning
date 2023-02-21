@@ -1,6 +1,8 @@
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 
+import 'package:practice_app/constants/routes.dart';
+
 class InsertData extends StatefulWidget {
   const InsertData({Key? key}) : super(key: key);
 
@@ -12,13 +14,17 @@ class _InsertDataState extends State<InsertData> {
   final titleController = TextEditingController();
   final descriptionController = TextEditingController();
   final statusController = TextEditingController();
+  final genderController = TextEditingController();
+  String _selectedGender = "";
+
+  final List<String> _genderOptions = ['Male', 'Female', 'Non-binary', 'Other'];
 
   late DatabaseReference dbRef;
 
   @override
   void initState() {
     super.initState();
-    dbRef = FirebaseDatabase.instance.ref().child('users');
+    dbRef = FirebaseDatabase.instance.ref().child('Person');
   }
 
   @override
@@ -56,8 +62,8 @@ class _InsertDataState extends State<InsertData> {
                 keyboardType: TextInputType.text,
                 decoration: const InputDecoration(
                   border: OutlineInputBorder(),
-                  labelText: 'Title',
-                  hintText: 'Enter Title of Service',
+                  labelText: 'Name',
+                  hintText: 'Enter your name',
                 ),
               ),
               const SizedBox(
@@ -65,11 +71,13 @@ class _InsertDataState extends State<InsertData> {
               ),
               TextField(
                 controller: descriptionController,
-                keyboardType: TextInputType.text,
+                enableSuggestions: false,
+                autocorrect: false,
+                keyboardType: TextInputType.emailAddress,
                 decoration: const InputDecoration(
                   border: OutlineInputBorder(),
-                  labelText: 'Description',
-                  hintText: 'Enter Description',
+                  labelText: 'Email',
+                  hintText: 'Enter Email',
                 ),
               ),
               const SizedBox(
@@ -77,12 +85,35 @@ class _InsertDataState extends State<InsertData> {
               ),
               TextField(
                 controller: statusController,
-                keyboardType: TextInputType.text,
+                keyboardType: TextInputType.number,
                 decoration: const InputDecoration(
                   border: OutlineInputBorder(),
-                  labelText: 'Status',
-                  hintText: 'Enter status',
+                  labelText: 'Phone',
+                  hintText: 'Enter phone Number',
                 ),
+              ),
+              const SizedBox(
+                height: 30,
+              ),
+              DropdownButtonFormField<String>(
+                decoration: const InputDecoration(
+                  labelText: 'Gender',
+                  border: OutlineInputBorder(),
+                ),
+                value: _selectedGender.isNotEmpty ? _selectedGender : null,
+                onChanged: (value) {
+                  setState(() {
+                    _selectedGender = value!;
+                    genderController.text = value;
+                  });
+                },
+                items: _genderOptions
+                    .map<DropdownMenuItem<String>>((String value) {
+                  return DropdownMenuItem<String>(
+                    value: value,
+                    child: Text(value),
+                  );
+                }).toList(),
               ),
               const SizedBox(
                 height: 30,
@@ -90,13 +121,15 @@ class _InsertDataState extends State<InsertData> {
               MaterialButton(
                 onPressed: () {
                   Map<String, String> students = {
-                    'title': titleController.text,
-                    'description': descriptionController.text,
-                    'status': statusController.text
+                    'Name': titleController.text,
+                    'Email': descriptionController.text,
+                    'Number': statusController.text,
+                    'Gender': genderController.text,
                   };
 
                   dbRef.push().set(students);
-                  Navigator.of(context).pop();
+                  Navigator.of(context)
+                      .pushNamedAndRemoveUntil(APIViewRoute, (route) => false);
                 },
                 color: Colors.blue,
                 textColor: Colors.white,

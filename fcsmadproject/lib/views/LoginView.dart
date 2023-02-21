@@ -2,6 +2,7 @@
 
 //import 'package:firebase_auth/firebase_auth.dart';
 import 'package:fcsmadproject/utilities/helpingFuntions.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'dart:developer' as devtools show log;
 import 'package:fcsmadproject/constants/routes.dart';
@@ -41,11 +42,11 @@ class _RegisterViewState extends State<LoginView> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
-        Text(
+        const Text(
           'Email',
           style: kLabelStyle,
         ),
-        SizedBox(height: 10.0),
+        const SizedBox(height: 10.0),
         // TextField(
         //   keyboardType: TextInputType.text,
         //   decoration: const InputDecoration(
@@ -59,12 +60,13 @@ class _RegisterViewState extends State<LoginView> {
           decoration: kBoxDecorationStyle,
           height: 60.0,
           child: TextField(
+            controller: _email,
             keyboardType: TextInputType.emailAddress,
-            style: TextStyle(
+            style: const TextStyle(
               color: Colors.white,
               fontFamily: 'OpenSans',
             ),
-            decoration: InputDecoration(
+            decoration: const InputDecoration(
               border: InputBorder.none,
               //contentPadding: EdgeInsets.only(top: 14.0),
               prefixIcon: Icon(
@@ -85,22 +87,23 @@ class _RegisterViewState extends State<LoginView> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
-        Text(
+        const Text(
           'Password',
           style: kLabelStyle,
         ),
-        SizedBox(height: 10.0),
+        const SizedBox(height: 10.0),
         Container(
           alignment: Alignment.centerLeft,
           decoration: kBoxDecorationStyle,
           height: 60.0,
           child: TextField(
+            controller: _password,
             obscureText: true,
-            style: TextStyle(
+            style: const TextStyle(
               color: Colors.white,
               fontFamily: 'OpenSans',
             ),
-            decoration: InputDecoration(
+            decoration: const InputDecoration(
               border: InputBorder.none,
               contentPadding: EdgeInsets.only(top: 14.0),
               prefixIcon: Icon(
@@ -122,7 +125,7 @@ class _RegisterViewState extends State<LoginView> {
       child: TextButton(
         onPressed: () => print('Forgot Password Button Pressed'),
         //padding: EdgeInsets.only(right: 0.0),
-        child: Text(
+        child: const Text(
           'Forgot Password?',
           style: kLabelStyle,
         ),
@@ -148,7 +151,7 @@ class _RegisterViewState extends State<LoginView> {
               },
             ),
           ),
-          Text(
+          const Text(
             'Remember me',
             style: kLabelStyle,
           ),
@@ -159,7 +162,7 @@ class _RegisterViewState extends State<LoginView> {
 
   Widget _buildLoginBtn() {
     return Container(
-      padding: EdgeInsets.symmetric(vertical: 25.0),
+      padding: const EdgeInsets.symmetric(vertical: 25.0),
       width: double.infinity,
       child: ElevatedButton(
         style: ElevatedButton.styleFrom(
@@ -169,13 +172,37 @@ class _RegisterViewState extends State<LoginView> {
           //onPrimary: Colors.white, // foreground
         ),
 
-        onPressed: () => print('Login Button Pressed'),
+        onPressed: () async {
+          try {
+            final email = _email.text;
+            final password = _password.text;
+            await FirebaseAuth.instance
+                .signInWithEmailAndPassword(email: email, password: password);
+            Navigator.of(context)
+                .pushNamedAndRemoveUntil(landingViewRoute, (route) => false);
+          } on FirebaseAuthException catch (e) {
+            // you can check the exception type by e.runtimeType
+            // and then to catch this specific exception you can use
+            // on keyword with type behind catch keyword and then
+            // use the e.code method to check the error code adn implement
+            // the code accordingly.
+            if (e.code == "user-not-found") {
+              ShowDialogGeneric(context, "User Not Found");
+            } else if (e.code == "wrong-password") {
+              ShowDialogGeneric(context, "Wrong Password");
+            } else {
+              ShowDialogGeneric(context, "Error: ${e.code}");
+            }
+          } catch (e) {
+            ShowDialogGeneric(context, e.toString());
+          }
+        },
         //padding: EdgeInsets.all(15.0),
         //shape: RoundedRectangleBorder(
 
         //),
         //color:
-        child: Text(
+        child: const Text(
           'SIGN IN',
           style: TextStyle(
             color: Color(0xFF527DAA),
@@ -191,7 +218,7 @@ class _RegisterViewState extends State<LoginView> {
 
   Widget _buildSignInWithText() {
     return Column(
-      children: <Widget>[
+      children: const <Widget>[
         Text(
           '- OR -',
           style: TextStyle(
@@ -333,9 +360,7 @@ class _RegisterViewState extends State<LoginView> {
                       ),
                       const SizedBox(height: 30.0),
                       _buildEmailTF(),
-                      const SizedBox(
-                        height: 30.0,
-                      ),
+                      const SizedBox(height: 30.0),
                       _buildPasswordTF(),
                       _buildForgotPasswordBtn(),
                       _buildRememberMeCheckbox(),

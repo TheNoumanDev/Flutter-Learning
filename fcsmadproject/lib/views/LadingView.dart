@@ -38,119 +38,121 @@ class _LandingViewState extends State<LandingView>
     final color = Colors.white;
     _scale = 1 - _controller.value;
     return Scaffold(
-        backgroundColor: Color(0xFF6CA8F1),
-        body: Center(
-          child: Column(
-            children: <Widget>[
-              const SizedBox(
-                height: 30,
+      backgroundColor: Color(0xFF6CA8F1),
+      body: Center(
+          child: SingleChildScrollView(
+        physics: const AlwaysScrollableScrollPhysics(),
+        padding: const EdgeInsets.symmetric(
+          horizontal: 40.0,
+          vertical: 120.0,
+        ),
+        child: Column(
+          children: <Widget>[
+            const SizedBox(
+              height: 30,
+            ),
+            AvatarGlow(
+              endRadius: 90,
+              duration: Duration(seconds: 2),
+              glowColor: Colors.white24,
+              repeat: true,
+              repeatPauseDuration: Duration(seconds: 1),
+              startDelay: Duration(seconds: 1),
+              child: Material(
+                  elevation: 8.0,
+                  shape: const CircleBorder(),
+                  child: CircleAvatar(
+                    backgroundColor: Colors.grey[100],
+                    radius: 50.0,
+                    child:
+                        Image.asset('assets/images/icon.png', fit: BoxFit.fill),
+                  )),
+            ),
+            const SizedBox(
+              height: 30.0,
+            ),
+            DelayedAnimation(
+              child: Text(
+                "Hi There",
+                style: TextStyle(
+                    fontWeight: FontWeight.bold, fontSize: 35.0, color: color),
               ),
-              AvatarGlow(
-                endRadius: 90,
-                duration: Duration(seconds: 2),
-                glowColor: Colors.white24,
-                repeat: true,
-                repeatPauseDuration: Duration(seconds: 1),
-                startDelay: Duration(seconds: 1),
-                child: Material(
-                    elevation: 8.0,
-                    shape: CircleBorder(),
-                    child: CircleAvatar(
-                      backgroundColor: Colors.grey[100],
-                      child: FlutterLogo(
-                        size: 50.0,
-                      ),
-                      radius: 50.0,
-                    )),
+              delay: delayedAmount + 1000,
+            ),
+            DelayedAnimation(
+              child: Text(
+                "I'm RichApp",
+                style: TextStyle(
+                    fontWeight: FontWeight.bold, fontSize: 35.0, color: color),
               ),
-              const SizedBox(
-                height: 30.0,
+              delay: delayedAmount + 2000,
+            ),
+            SizedBox(
+              height: 40.0,
+            ),
+            DelayedAnimation(
+              child: Text(
+                "WHERE YOU CAN",
+                style: TextStyle(fontSize: 20.0, color: color),
               ),
-              DelayedAnimation(
-                child: Text(
-                  "Hi There",
-                  style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 35.0,
-                      color: color),
+              delay: delayedAmount + 3000,
+            ),
+            DelayedAnimation(
+              child: Text(
+                "BECOME RICHER THAN ME!!",
+                style: TextStyle(fontSize: 20.0, color: color),
+              ),
+              delay: delayedAmount + 3000,
+            ),
+            SizedBox(
+              height: 100.0,
+            ),
+            DelayedAnimation(
+              child: GestureDetector(
+                onTapDown: _onTapDown,
+                onTapUp: _onTapUp,
+                child: Transform.scale(
+                  scale: _scale,
+                  child: _animatedButtonUI('Lets Get Started !'),
                 ),
-                delay: delayedAmount + 1000,
+                onTap: () {
+                  Navigator.of(context).pushNamedAndRemoveUntil(
+                      registerViewRoute, (route) => false);
+                },
               ),
-              DelayedAnimation(
-                child: Text(
-                  "I'm RichApp",
-                  style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 35.0,
-                      color: color),
-                ),
-                delay: delayedAmount + 2000,
-              ),
-              SizedBox(
-                height: 40.0,
-              ),
-              DelayedAnimation(
-                child: Text(
-                  "WHERE YOU CAN",
-                  style: TextStyle(fontSize: 20.0, color: color),
-                ),
-                delay: delayedAmount + 3000,
-              ),
-              DelayedAnimation(
-                child: Text(
-                  "BECOME RICHER THAN ME!!",
-                  style: TextStyle(fontSize: 20.0, color: color),
-                ),
-                delay: delayedAmount + 3000,
-              ),
-              SizedBox(
-                height: 100.0,
-              ),
-              DelayedAnimation(
-                child: GestureDetector(
-                  onTapDown: _onTapDown,
-                  onTapUp: _onTapUp,
-                  child: Transform.scale(
-                    scale: _scale,
-                    child: _animatedButtonUI('Lets Get Started !'),
-                  ),
-                  onTap: () {
-                    Navigator.of(context).pushNamedAndRemoveUntil(
-                        registerViewRoute, (route) => false);
-                  },
-                ),
-                delay: delayedAmount + 4000,
-              ),
-              SizedBox(
-                height: 50.0,
-              ),
-              // DelayedAnimation(
-              //   child: Text(
-              //     "ALready Registered? Click Me!".toUpperCase(),
-              //     style: TextStyle(
-              //         fontSize: 20.0,
-              //         fontWeight: FontWeight.bold,
-              //         color: color),
-              //   ),
-              //   delay: delayedAmount + 5000,
-              // ),
-            ],
+              delay: delayedAmount + 4000,
+            ),
+            SizedBox(
+              height: 50.0,
+            ),
+            // DelayedAnimation(
+            //   child: Text(
+            //     "ALready Registered? Click Me!".toUpperCase(),
+            //     style: TextStyle(
+            //         fontSize: 20.0,
+            //         fontWeight: FontWeight.bold,
+            //         color: color),
+            //   ),
+            //   delay: delayedAmount + 5000,
+            // ),
+          ],
+        ),
+      )
+          //  Column(
+          //   mainAxisAlignment: MainAxisAlignment.center,
+          //   children: <Widget>[
+          //     Text('Tap on the Below Button',style: TextStyle(color: Colors.grey[400],fontSize: 20.0),),
+          //     SizedBox(
+          //       height: 20.0,
+          //     ),
+          //      Center(
+
+          //   ),
+          //   ],
+
+          // ),
           ),
-        )
-        //  Column(
-        //   mainAxisAlignment: MainAxisAlignment.center,
-        //   children: <Widget>[
-        //     Text('Tap on the Below Button',style: TextStyle(color: Colors.grey[400],fontSize: 20.0),),
-        //     SizedBox(
-        //       height: 20.0,
-        //     ),
-        //      Center(
-
-        //   ),
-        //   ],
-
-        // ),
-        );
+    );
   }
 
   Widget _animatedButtonUI(String r) => Container(

@@ -1,4 +1,5 @@
 import 'package:fcsmadproject/views/LadingView.dart';
+import 'package:fcsmadproject/views/VerificationEmail.dart';
 import 'package:fcsmadproject/views/registerView.dart';
 import 'package:fcsmadproject/views/LoginView.dart';
 import 'package:flutter/material.dart';
@@ -19,6 +20,8 @@ void main() {
       routes: {
         registerViewRoute: (context) => const RegisterView(),
         LoginViewRoute: (context) => const LoginView(),
+        landingViewRoute: (context) => const LandingView(),
+        VerificationViewRoute: (context) => const VerificationEmail(),
       },
     ),
   );
@@ -54,7 +57,7 @@ class HomePage extends StatelessWidget {
               if (currentUser.emailVerified) {
                 return const LandingView();
               } else {
-                return const Text("hi"); //verifyEmailView();
+                return const LandingView(); //verifyEmailView();
               }
             }
           // Navigator.of(context).push(MaterialPageRoute(
