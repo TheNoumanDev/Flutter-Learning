@@ -5,10 +5,12 @@ import 'package:flutter/material.dart';
 import 'package:practice_app/Views/APIView.dart';
 import 'package:practice_app/Views/AccountsView.dart';
 import 'package:practice_app/Views/InsertRecordAPI.dart';
+import 'package:practice_app/Views/LandingView.dart';
 import 'package:practice_app/Views/Login_View.dart';
 import 'package:practice_app/Views/Register_View.dart';
 import 'package:practice_app/Views/ForgetView.dart';
 import 'package:practice_app/constants/routes.dart';
+import 'Views/File.dart';
 import 'Views/MainUI.dart';
 import 'Views/VerifyEmailView.dart';
 import 'firebase_options.dart';
@@ -61,13 +63,29 @@ class HomePage extends StatelessWidget {
             final currentUser = FirebaseAuth.instance.currentUser;
 
             if (currentUser == null) {
-              return const LoginView();
+              return const LandingView();
             } else {
-              if (currentUser.emailVerified) {
-                return const AccountView();
-              } else {
-                return const verifyEmailView();
-              }
+              // if (currentUser.emailVerified) {
+              return ProfileScreen(
+                username: 'johndoe',
+                title: 'Software Developer',
+                imageUrl: 'https://example.com/profile.jpg',
+                info: [
+                  Info(
+                    icon: Icons.email,
+                    title: 'Email',
+                    subtitle: 'johndoe@example.com',
+                  ),
+                  Info(
+                    icon: Icons.phone,
+                    title: 'Phone',
+                    subtitle: '555-555-5555',
+                  ),
+                ],
+              );
+              // } else {
+              //   return const verifyEmailView();
+              // }
             }
           // Navigator.of(context).push(MaterialPageRoute(
           // builder: (context) => const verifyEmailView()));

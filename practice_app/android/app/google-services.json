@@ -1,6 +1,7 @@
 {
   "project_info": {
     "project_number": "904497988998",
+    "firebase_url": "https://practice0x45-default-rtdb.firebaseio.com",
     "project_id": "practice0x45",
     "storage_bucket": "practice0x45.appspot.com"
   },
@@ -29,6 +30,13 @@
             {
               "client_id": "904497988998-8hvbjqfioeqoe0tb44fdsp8jh2a5jol3.apps.googleusercontent.com",
               "client_type": 3
+            },
+            {
+              "client_id": "904497988998-ggspbn6fojkauhheu4ig1ljmjao9ujg5.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.practiceApp"
+              }
             }
           ]
         }
