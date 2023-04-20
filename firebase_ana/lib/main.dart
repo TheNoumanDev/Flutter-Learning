@@ -10,7 +10,6 @@ void main() {
 
   runApp(
     MaterialApp(
-      title: 'Flutter Demo',
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
@@ -44,39 +43,6 @@ class HomePage extends StatelessWidget {
             final FirebaseAnalytics analytics = FirebaseAnalytics.instance;
             analytics.logAppOpen();
             return SplashScreen();
-          // final ButtonStyle style = ElevatedButton.styleFrom(
-          //     textStyle: const TextStyle(fontSize: 20));
-          // final currentUser = FirebaseAuth.instance.currentUser;
-
-          // if (currentUser == null) {
-          //   return const LandingView();
-          // } else {
-          //   // if (currentUser.emailVerified) {
-          //   return ProfileScreen(
-          //     username: 'johndoe',
-          //     title: 'Software Developer',
-          //     imageUrl: 'https://example.com/profile.jpg',
-          //     info: [
-          //       Info(
-          //         icon: Icons.email,
-          //         title: 'Email',
-          //         subtitle: 'johndoe@example.com',
-          //       ),
-          //       Info(
-          //         icon: Icons.phone,
-          //         title: 'Phone',
-          //         subtitle: '555-555-5555',
-          //       ),
-          //     ],
-          //   );
-          //   // } else {
-          //   //   return const verifyEmailView();
-          //   // }
-          // }
-          // Navigator.of(context).push(MaterialPageRoute(
-          // builder: (context) => const verifyEmailView()));
-          //}
-
           default:
             return const CircularProgressIndicator();
         }

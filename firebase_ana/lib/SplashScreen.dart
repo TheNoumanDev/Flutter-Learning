@@ -135,33 +135,9 @@ class _SplashScreenState extends State<SplashScreen>
             const SizedBox(
               height: 50.0,
             ),
-            // DelayedAnimation(
-            //   child: Text(
-            //     "ALready Registered? Click Me!".toUpperCase(),
-            //     style: TextStyle(
-            //         fontSize: 20.0,
-            //         fontWeight: FontWeight.bold,
-            //         color: color),
-            //   ),
-            //   delay: delayedAmount + 5000,
-            // ),
           ],
         ),
-      )
-          //  Column(
-          //   mainAxisAlignment: MainAxisAlignment.center,
-          //   children: <Widget>[
-          //     Text('Tap on the Below Button',style: TextStyle(color: Colors.grey[400],fontSize: 20.0),),
-          //     SizedBox(
-          //       height: 20.0,
-          //     ),
-          //      Center(
-
-          //   ),
-          //   ],
-
-          // ),
-          ),
+      )),
     );
   }
 
