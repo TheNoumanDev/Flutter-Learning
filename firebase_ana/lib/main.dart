@@ -40,8 +40,6 @@ class HomePage extends StatelessWidget {
       builder: (context, snapshot) {
         switch (snapshot.connectionState) {
           case ConnectionState.done:
-            final FirebaseAnalytics analytics = FirebaseAnalytics.instance;
-            analytics.logAppOpen();
             return SplashScreen();
           default:
             return const CircularProgressIndicator();

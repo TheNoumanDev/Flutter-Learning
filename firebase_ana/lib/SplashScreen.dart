@@ -17,13 +17,11 @@ class SplashScreen extends StatefulWidget {
 
 class _SplashScreenState extends State<SplashScreen>
     with SingleTickerProviderStateMixin {
-  analyticsServices _ana = analyticsServices();
   final int delayedAmount = 500;
   late double _scale;
   late AnimationController _controller;
   @override
   void initState() {
-    _ana.setCurrentScreen('Splash Screen');
     _controller = AnimationController(
       vsync: this,
       duration: const Duration(
@@ -126,8 +124,6 @@ class _SplashScreenState extends State<SplashScreen>
                   child: _animatedButtonUI('Lets Get Started !'),
                 ),
                 onTap: () {
-                  _ana.logButtonClickedEvent(
-                      'Button Clicked', 'Splash Button', 'Splash Screen');
                   Navigator.of(context).pushNamed('/page2');
                 },
               ),

@@ -1,3 +1,4 @@
+import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/material.dart';
 
 import 'FirebaseAnalytics_services.dart';
@@ -8,36 +9,56 @@ class SemanticsPage extends StatefulWidget {
 }
 
 class _SemanticsPageState extends State<SemanticsPage> {
-  analyticsServices _ana = analyticsServices();
+  late FirebaseAnalytics analytics;
+  late FirebaseAnalyticsObserver observer;
+
+  void button_event(String name, String color) {
+    var params = <String, dynamic>{
+      'button_name': name,
+      'button_color': color,
+    };
+    analytics.logEvent(
+      name: 'button_pressed1',
+      parameters: params,
+    );
+  }
 
   @override
   void initState() {
-    _ana.setCurrentScreen('Landing Page');
+    analytics = FirebaseAnalytics.instance;
+    observer = FirebaseAnalyticsObserver(analytics: analytics);
     // TODO: implement initState
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
+    analytics
+        .logEvent(name: 'screen_view', parameters: {'screen_name': 'MyScreen'});
     return Scaffold(
       appBar: AppBar(
-        title: Text('Semantics Example'),
+        title: const Text('Semantics & Firebase Analytics Example'),
       ),
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             TextButton(
-              onPressed: () {},
-              child: Text('Click me!'),
+              onPressed: () {
+                print("hi");
+                button_event('Simple Button', 'blue');
+              },
+              child: const Text('Simple Button'),
             ),
-            SizedBox(height: 20.0),
+            const SizedBox(height: 20.0),
             Semantics(
-              label: 'This is a custom button',
+              label: 'This is a Semantic button',
               hint: 'Double-tap to activate',
               child: TextButton(
-                onPressed: () {},
-                child: Text('Custom button'),
+                onPressed: () {
+                  button_event('Semantic Button', 'blue');
+                },
+                child: const Text('Semantic button'),
               ),
             ),
           ],

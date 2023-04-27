@@ -58,6 +58,7 @@ class HomePage extends StatelessWidget {
       builder: (context, snapshot) {
         switch (snapshot.connectionState) {
           case ConnectionState.done:
+          
             // final ButtonStyle style = ElevatedButton.styleFrom(
             //     textStyle: const TextStyle(fontSize: 20));
             final currentUser = FirebaseAuth.instance.currentUser;
